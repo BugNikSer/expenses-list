@@ -9,7 +9,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   const trpc = app.get(TrpcRouter)
-  trpc.applyMiddleware(app);
+  await trpc.applyMiddleware(app);
   await app.listen(envVars.port);
 }
 bootstrap();
