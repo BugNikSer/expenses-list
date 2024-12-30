@@ -37,7 +37,7 @@ importers:
         specifier: ^10.0.0
         version: 10.4.9
       '@nestjs/schematics':
-        specifier: ^10.0.0
+        specifier: ^10.2.3
         version: 10.2.3(chokidar@3.6.0)(typescript@5.7.2)
       '@nestjs/testing':
         specifier: ^10.0.0

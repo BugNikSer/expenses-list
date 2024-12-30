@@ -11,8 +11,5 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@nestjs/schematics": "^10.2.3"
-  }
+  "license": "ISC"
 }
