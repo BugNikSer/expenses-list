@@ -5,7 +5,12 @@ import * as trpcExpress from '@trpc/server/adapters/express';
 
 @Injectable()
 export class TrpcRouter {
-  constructor(private readonly trpc: TrpcService) {}
+  constructor(private readonly trpc: TrpcService) {
+    console.log('---------------------')
+    console.log(trpc)
+    console.log('---------------------')
+    this.trpc = trpc;
+  }
 
   appRouter = this.trpc.router({
     hello: this.trpc.procedure
