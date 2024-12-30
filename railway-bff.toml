@@ -1,10 +1,2 @@
-providers = ["node"]
-
-[phase.install]
-cmds = [
-  "echo installing",
-  "npm install -g corepack",
-  "corepack enable",
-  "corepack prepare pnpm@9.15.5 --active",
-  "pnpm install"
-]
+[phases.setup]
+nixPkgs = ['...', 'pnpm']
