@@ -1,0 +1,18 @@
+{
+  "$schema": "https://railway.com/railway.schema.json",
+  "build": {
+    "nixpacksPlan": {
+      "phases": {
+        "install": {
+          "dependsOn": ["setup"],
+          "cmds": [
+            "npm install -g corepack",
+            "corepack enable",
+            "corepack prepare pnpm@9.15.5 --active",
+            "pnpm install"
+          ]
+        }
+      }
+    }
+  }
+}
