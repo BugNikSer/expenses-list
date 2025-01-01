@@ -5,7 +5,7 @@ const HomePage = async () => {
   const response = await trpc.hello.query({ name: 'User' })
   return (
     <div>
-      {response.greeting}
+      {response}
       <ClientSide />
     </div>
   );
