@@ -11,6 +11,9 @@
     "build:web": "pnpm --filter web build",
     "start:web": "pnpm --filter web start"
   },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
