@@ -6,7 +6,7 @@
         "install": {
           "dependsOn": ["setup"],
           "cmds": [
-            "npm install -g corepack",
+            "npm install -g pnpm corepack",
             "pnpm install"
           ]
         }
