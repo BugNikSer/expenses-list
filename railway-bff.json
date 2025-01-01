@@ -5,10 +5,7 @@
       "phases": {
         "install": {
           "dependsOn": ["setup"],
-          "cmds": [
-            "npm install -g pnpm",
-            "pnpm install"
-          ]
+          "cmds": ["pnpm deps:bff"]
         }
       }
     }
