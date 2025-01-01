@@ -6,7 +6,7 @@
   "scripts": {
     "build:bff": "pnpm --filter bff build",
     "build:web": "pnpm --filter web build",
-    "start:bff": "pnpm --filter bff start:prod",
+    "start:bff": "pnpm --filter bff start",
     "start:web": "pnpm --filter web start"
   },
   "keywords": [],
