@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deps:bff": "pnpm --filter bff install",
     "build:bff": "pnpm --filter bff build",
     "build:web": "pnpm --filter web build",
     "start:bff": "pnpm --filter bff start",
