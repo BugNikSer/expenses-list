@@ -7,7 +7,8 @@ const ClientSide = () => {
   const [greeting, setGreeting] = useState('')
   useEffect(() => {
     trpc.hello.query({ name: 'bug' }).then(response => {
-      setGreeting(response.greeting)
+      console.log(response)
+      setGreeting(response)
     })
   })
 

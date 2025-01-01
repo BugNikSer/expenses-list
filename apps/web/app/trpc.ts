@@ -1,8 +1,8 @@
 import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
-import { AppRouter } from '@bff/trpc/trpc.router';
+import { TAppRouter } from '@bff/trpc';
 
-export const trpc = createTRPCProxyClient<AppRouter>({
+export const trpc = createTRPCProxyClient<TAppRouter>({
   links: [
-    httpBatchLink({ url: `${process.env.NEXT_PUBLIC_NESTJS_SERVER}/trpc` }) // TODO
+    httpBatchLink({ url: `${process.env.NEXT_PUBLIC_NESTJS_SERVER}/trpc` })
   ],
 })
