@@ -7,7 +7,7 @@
     "deps:bff": "pnpm --filter bff install",
     "build:bff": "pnpm --filter bff build",
     "start:bff": "pnpm --filter bff start",
-    "deps:web": "pnpm --filter web install",
+    "deps:web": "pnpm --filter web --filter bff install",
     "build:web": "pnpm --filter web build",
     "start:web": "pnpm --filter web start"
   },
