@@ -1,14 +1,12 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { createExpressMiddleware } from '@trpc/server/adapters/express';
 
-import { appRouter, TAppRouter } from './trpc';
-
-dotenv.config();
+import { appRouter } from './trpc';
+import config from './utils/config';
 
 const app = express();
-const port = process.env.PORT;
+const { port } = config;
 
 app.get('/', (req, res) => {
 	res.send('Express + TypeScript Server');
