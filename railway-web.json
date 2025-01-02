@@ -5,7 +5,10 @@
       "phases": {
         "install": {
           "dependsOn": ["setup"],
-          "cmds": ["pnpm deps:web"]
+          "cmds": [
+            "pnpm deps:web",
+            "pnpm deps:bff"
+          ]
         }
       }
     }
