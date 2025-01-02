@@ -4,6 +4,9 @@ import { createExpressMiddleware } from '@trpc/server/adapters/express';
 
 import { appRouter } from './trpc';
 import config from './utils/config';
+import { areaLogger } from './utils/logger';
+
+const logger = areaLogger('init')
 
 const app = express();
 const { port } = config;
@@ -20,5 +23,5 @@ app.use(
 );
 
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+  logger.info('Bff', { port }, { listening: true });
 });
