@@ -23,5 +23,5 @@ app.use(
 );
 
 app.listen(port, () => {
-  logger.info('Bff', { port }, { listening: true });
+  logger.info('Listening port', port);
 });

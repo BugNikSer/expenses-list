@@ -1,49 +1,64 @@
 import winston from 'winston';
 import config from './config';
 
-const { combine, timestamp, printf, colorize, json } = winston.format;
+type TLogLevel = 'error' | 'warn' | 'info' | 'http' | 'verbose' | 'debug' | 'silly'
+const { combine, timestamp, printf, colorize, json, metadata, label, errors } = winston.format;
 
-const formatMeta = (meta: Record<symbol, any>) => {
-  let result: (string | number)[] = []
+const mergeMeta = winston.format((info: winston.Logform.TransformableInfo) => {
+  type TMeta = Record<string, any>
+  const { message, metadata } = info;
+  const { area, app, timestamp, label, ...rest } = metadata as TMeta;
 
-  const formatItem = (item: any) => {
-    if (typeof item === 'object') return JSON.stringify(item, null, 2)
+  info.area = area;
+  info.app = app;
+  info.timestamp = timestamp;
+  info.label = label;
+
+  delete info.metadata
+
+  const meta = Object.values(rest).map(item => {
+    if (typeof item === 'object') return JSON.stringify(item)
     return item
-  }
+  })
 
-  // process splat
-  const splat = meta[Symbol.for('splat')];
-  if (splat && splat.length) {
-    const splatList = splat.map(formatItem)
-    result = [...result, splatList]
-  }
+  info.message = [message, ...meta].filter(Boolean).join(' ')
 
-  // process others
-  const othersList = Object.values(meta).map(formatItem)
-  result = [...result, ...othersList]
-
-  return result
-};
+  return info;
+})
 
 const winstonFormat = config.environment === 'DEV'
   ? combine(
-    timestamp({ format: 'HH:mm:ss DD.MM.YY' }),
-    colorize({ level: true,  }),
+    errors({ stack: true }),
+    timestamp({ format: 'DD.MM.YY HH:mm:ss' }),
+    metadata(),
+    mergeMeta(),
     printf(info => {
-      const { timestamp, area, app, level, message, ...meta } = info;
+      const { timestamp, area, level, message } = info;
+
+      const applyColor = (val: string) => colorize().colorize(level as TLogLevel, val)
+
+      const colorizedTimestamp = applyColor(`[${timestamp}]`)
+      const colorizedArea = area ? applyColor(`[${area}]`) : null
+      const colorizedLevel = applyColor(level)
 
       return [
-        `[${timestamp}]`,
-        area && `[${area}]`,
-        level,
+        colorizedTimestamp,
+        colorizedArea,
+        colorizedLevel,
         message,
-        ...formatMeta(meta),
       ].filter(Boolean).join(' ');
-    }),
-  ): json()
+    })
+  )
+  : combine(
+    label({ label: 'bff', message: false }),
+    errors({ stack: true }),
+    timestamp({ format: 'DD.MM.YY HH:mm:ss' }),
+    metadata(),
+    mergeMeta(),
+    json(),
+  )
 
 const baseLogger = winston.createLogger({
-  defaultMeta: { app: 'bff' },
   transports: [new winston.transports.Console()],
   format: winstonFormat,
 })
@@ -51,6 +66,6 @@ const baseLogger = winston.createLogger({
 export const areaLogger = (area: string) => {
   return Object.keys(baseLogger.levels).reduce((acc, level) => ({
     ...acc,
-    [level]: (message, ...params) => baseLogger.log({ level, message, area, ...params })
-  }), {} as Record<keyof winston.config.AbstractConfigSetLevels, (message: string, ...params: any[]) => void>)
+    [level]: (...params: any[]) => baseLogger.log({ level, message: '', area, ...params })
+  }), {} as Record<TLogLevel, (...params: any[]) => void>)
 }
