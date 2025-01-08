@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 	res.send('Hello world');
 });
 
-app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(cookieParser())
 
 app.use(
