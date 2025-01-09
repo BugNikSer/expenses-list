@@ -4,7 +4,6 @@ import { parseToken, generateTokens, setTokenCookies, TOKEN_KEY, REFRESH_TOKEN_K
 export const createContext = (
   { req, res }: CreateExpressContextOptions
 ) => {
-  console.log(req.headers)
   const token = req.cookies[TOKEN_KEY] as string | undefined;
   const refreshToken = req.cookies[REFRESH_TOKEN_KEY] as string | undefined;
   

@@ -4,8 +4,10 @@ import jwt from 'jsonwebtoken';
 import config from './config';
 import { areaLogger } from './logger';
 
-export const TOKEN_KEY = 'access-key';
-export const REFRESH_TOKEN_KEY = 'refresh-access-key';
+export const TOKEN_KEY = 'access-token';
+export const REFRESH_TOKEN_KEY = 'refresh-access-token';
+const HOUR = 60_000;
+const DAY = 86_400_000;
 
 export const parseToken = (token: string) => {
   const logger = areaLogger('parse-token');
@@ -35,8 +37,8 @@ export const generateTokens = (userId: number) => {
     ts: Number(new Date()),
   }
 
-  const token = jwt.sign(data, config.authSecreteKey, { expiresIn: '1m' });
-  const refreshToken = jwt.sign(data, config.authSecreteKey, { expiresIn: '1d' });
+  const token = jwt.sign(data, config.authSecreteKey, { expiresIn: HOUR });
+  const refreshToken = jwt.sign(data, config.authSecreteKey, { expiresIn: DAY });
 
   return { token, refreshToken };
 };
@@ -45,9 +47,8 @@ export const setTokenCookies = (
   res: CreateExpressContextOptions['res'],
   tokens: {token: string, refreshToken: string}
 ) => {
-  const ONE_DAY = 1000 * 60 * 60 * 24;
-  res.cookie(TOKEN_KEY, tokens.token, { maxAge: ONE_DAY, httpOnly: true });
-  res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, { maxAge: ONE_DAY, httpOnly: true });
+  res.cookie(TOKEN_KEY, tokens.token, { maxAge: DAY, httpOnly: true, sameSite: 'lax' });
+  res.cookie(REFRESH_TOKEN_KEY, tokens.refreshToken, { maxAge: DAY, httpOnly: true, sameSite: 'lax' });
 }
 
 export const dropTokenCookies = (res: CreateExpressContextOptions['res']) => {

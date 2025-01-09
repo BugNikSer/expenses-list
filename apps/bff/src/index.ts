@@ -26,9 +26,9 @@ app.use(
   createExpressMiddleware({
     router: appRouter,
     createContext,
-    onError({ error, type, path, input, ctx, req }) {
-      trpcLogger.http({ error, type, path, input, ctx, req });
-    }
+    onError({ error, type, path, input }) {
+      trpcLogger.http('Error on', type, path, 'with', input, error);
+    },
   }),
 );
 

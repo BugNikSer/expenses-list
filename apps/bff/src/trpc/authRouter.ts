@@ -14,10 +14,6 @@ export const authRouter = router({
       const { login, password } = input;
       const userId = login.length + password.length;
 
-      console.log('==============')
-      console.log({ login, password, userId });
-      console.log('==============')
-
       const tokens = generateTokens(userId);
       if (!tokens) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR' });
       setTokenCookies(ctx.res, tokens);

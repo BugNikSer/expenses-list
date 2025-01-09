@@ -4,6 +4,6 @@ dotenv.config();
 
 export default {
   port: process.env.PORT,
-  environment: process.env.ENVIRONMENT,
+  env: process.env.ENV,
   authSecreteKey: process.env.AUTH_SECRET_KEY,
 };
