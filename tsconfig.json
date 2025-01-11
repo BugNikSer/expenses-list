@@ -13,7 +13,8 @@
     "esModuleInterop": true,
     "paths": {
       "@bff/*": ["./apps/bff/*"],
-      "@web/*": ["./apps/web/*"]
+      "@web/*": ["./apps/web/*"],
+      "@user-service/*": ["./apps/user-service/*"]
     }
   }
 }
