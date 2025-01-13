@@ -9,9 +9,9 @@ export const appRouter = router({
         text: z.string(),
       }),
     )
-    .query((opts) => {
+    .query(async (opts) => {
       return {
-        greeting: `hello ${opts.input.text} ${opts.ctx.userId}`,
+        greeting: `hello ${opts.input.text} ${(await opts.ctx).userId}`,
       };
     }),
   auth: authRouter,

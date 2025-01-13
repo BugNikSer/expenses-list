@@ -17,9 +17,7 @@ const cookieOptions = {
 export const getTokens = (
   req: NextApiRequest
 ) => {
-  if (!req.headers.cookie) {
-    return { token: null, refreshToken: null };
-  }
+  if (!req.headers.cookie) return { token: null, refreshToken: null };
 
   const cookies = parse(req.headers.cookie);
   const token = cookies[TOKEN_KEY];
@@ -33,7 +31,6 @@ export const setTokens = async (
   res: NextApiResponse,
 ) => {
   const options = { maxAge: DAY / 1_000, ...cookieOptions };
-
   res.setHeader('Set-Cookie', [
     serialize(TOKEN_KEY, token, options),
     serialize(REFRESH_TOKEN_KEY, refreshToken, options),

@@ -21,7 +21,7 @@ export const createContext = async ({ req, res }: TCtx) => {
   const parsed = await userServiceTrpc.tokens.parseBoth.query({ token, refreshToken });
   if (!parsed) return { userId: null, req, res };
 
-  const userId = parsed;
+  const { userId } = parsed;
   if ('tokens' in parsed) setTokens(parsed.tokens, res);
 
   return { userId, req, res };

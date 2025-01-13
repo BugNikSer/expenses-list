@@ -56,12 +56,18 @@ export const authRouter = router({
     
       const user = findMockUser(validated.data);
       if (!user) {
-        throw new TRPCError({ code: 'NOT_FOUND', message: 'User not found' });
+        throw new TRPCError({
+          code: 'NOT_FOUND',
+          message: 'User not found',
+        });
       }
     
       const tokens = await userServiceTrpc.tokens.generate.query({ userId: user.id });
       if (!tokens) {
-        throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to generate token' });
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to generate token',
+        });
       }
     
       const context = await ctx;
