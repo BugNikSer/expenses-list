@@ -4,36 +4,29 @@ import { TRPCError } from '@trpc/server';
 import { router, publicProcedure } from '@web/src/server/trpc';
 import { setTokens, dropTokens } from '@web/src/lib/cookies';
 import { SignUpFormSchema, SignInFormSchema } from '@web/src/lib/definitions';
-import { addMockUser, findMockUser } from "@web/src/server/mock/users";
-import { userServiceTrpc } from '@web/src/server/connectors/user-service';
+import authService from '@web/src/server/services/authService';
 
 export const authRouter = router({
   signUp: publicProcedure
     .input(SignUpFormSchema)
     .mutation(async ({ input, ctx }) => {
-        const validated = SignUpFormSchema.safeParse({
-          login: input.login,
-          password: input.password,
+        const { data, error } = SignUpFormSchema.safeParse(input);
+
+        if (error) throw new TRPCError({
+          code: 'UNPROCESSABLE_CONTENT',
+          message: JSON.stringify(error.flatten().fieldErrors),
         });
-      
-        if (!validated.success) {
+        if (!data) throw new TRPCError({
+          code: 'PARSE_ERROR',
+          message: 'No input parse result',
+        })
+
+        const { tokens } = await authService.signUp(data).catch(e => {
           throw new TRPCError({
-            code: 'UNPROCESSABLE_CONTENT',
-            message: JSON.stringify(validated.error.flatten().fieldErrors),
-          });
-        }
-      
-        let userId: number | null = null;
-        try {
-          userId = addMockUser(validated.data);
-        } catch (e) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: (e as Error).message });
-        }
-      
-        const tokens = await userServiceTrpc.tokens.generate.query({ userId });
-        if (!tokens) {
-          throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Failed to generate token' });
-        }
+            code: 'INTERNAL_SERVER_ERROR',
+            message: e.message,
+          })
+        });
 
         const context = await ctx;
         await setTokens(tokens, context.res);
@@ -42,33 +35,27 @@ export const authRouter = router({
   signIn: publicProcedure
     .input(z.object({ login: z.string(), password: z.string() }))
     .mutation(async ({ input, ctx }) => {
-      const validated = SignInFormSchema.safeParse({
-        login: input.login,
-        password: input.password,
+      const { data, error } = SignInFormSchema.safeParse(input);
+
+      if (error) throw new TRPCError({
+        code: 'UNPROCESSABLE_CONTENT',
+        message: JSON.stringify(error.flatten().fieldErrors),
       });
-    
-      if (!validated.success) {
-        throw new TRPCError({
-          code: 'UNPROCESSABLE_CONTENT',
-          message: JSON.stringify(validated.error.flatten().fieldErrors),
-        });
-      }
-    
-      const user = findMockUser(validated.data);
-      if (!user) {
-        throw new TRPCError({
+      if (!data) throw new TRPCError({
+        code: 'PARSE_ERROR',
+        message: 'No input parse result',
+      })
+
+      const { tokens } = await authService.signIn(data).catch(e => {
+        if (e.message === '404') throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'User not found',
         });
-      }
-    
-      const tokens = await userServiceTrpc.tokens.generate.query({ userId: user.id });
-      if (!tokens) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to generate token',
+          message: e.message,
         });
-      }
+      })
     
       const context = await ctx;
       await setTokens(tokens, context.res);

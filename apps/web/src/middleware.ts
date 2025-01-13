@@ -1,8 +1,7 @@
 import 'server-only';
 import { NextRequest, NextResponse } from 'next/server';
-// import { cookies } from 'next/headers';
 import { TOKEN_KEY, REFRESH_TOKEN_KEY } from '@web/src/lib/cookies';
-import { userServiceTrpc } from '@web/src/server/connectors/user-service';
+import tokensService from './server/services/tokensService';
 
 const publicPaths = ['/login']
 
@@ -16,11 +15,10 @@ const middleware = async (req: NextRequest) => {
   } else {
     // if private area
     const redirectToLogin = NextResponse.redirect(new URL('/login', req.nextUrl));
-
     if (!token || !refreshToken) return redirectToLogin;
-    // const userId = getUserId({ token, refreshToken });
-    const p = await userServiceTrpc.tokens.parseBoth.query({ token, refreshToken });
-    if (!p?.userId) return redirectToLogin;
+
+    const data = await tokensService.parseTokens({ token, refreshToken });
+    if (!data) return redirectToLogin;
 
     return NextResponse.next();
   }

@@ -1,12 +1,14 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 import { router, procedure } from './trpc';
-import config from './config';
-import { generateTokens, parseTokens } from './methods';
+import config from '../utils/config';
+import { generateTokens, parseTokens } from '../utils/methods';
 
 export const tokenRouter = router({
   generate: procedure
-    .input(z.object({ userId: z.number() }))
+    .input(z.object({
+      userId: z.number(),
+    }))
     .query(({ input: { userId } }) => {
       if (!config.authSecreteKey) {
         throw new TRPCError({
@@ -16,8 +18,12 @@ export const tokenRouter = router({
       }
       return generateTokens(userId, config.authSecreteKey);
     }),
+
   parseBoth: procedure
-    .input(z.object({ token: z.string(), refreshToken: z.string() }))
+    .input(z.object({
+      token: z.string(),
+      refreshToken: z.string(),
+    }))
     .query(({ input: { token, refreshToken } }) => {
       if (!config.authSecreteKey) {
         throw new TRPCError({
@@ -39,7 +45,7 @@ export const tokenRouter = router({
         const tokens = generateTokens(payload.userId, config.authSecreteKey);
         return { ...payload, tokens };
       } else {
-        return { ...payload, tokens: undefined };
+        return { ...payload, tokens: null };
       }
     })
 })

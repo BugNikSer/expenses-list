@@ -1,9 +1,9 @@
 import { createHTTPServer } from '@trpc/server/adapters/standalone';
 import cors from 'cors';
 
-import { appRouter } from './appRouter';
-import config from './config';
-import { areaLogger } from './logger';
+import { appRouter } from './trpc/appRouter';
+import config from './utils/config';
+import { areaLogger } from './utils/logger';
 
 const logger = areaLogger('server')
 
@@ -17,5 +17,5 @@ const server = createHTTPServer({
 });
 
 server.listen(config.port, () => {
-  logger.info('[user-service] Listening', config.port)
+  logger.info('Listening port', config.port)
 });
