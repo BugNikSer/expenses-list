@@ -47,7 +47,7 @@ export const authRouter = router({
       })
 
       const { tokens } = await authService.signIn(data).catch(e => {
-        if (e.message === '404') throw new TRPCError({
+        if (String(e.message).endsWith('404')) throw new TRPCError({
           code: 'NOT_FOUND',
           message: 'User not found',
         });

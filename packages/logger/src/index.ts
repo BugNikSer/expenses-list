@@ -44,7 +44,7 @@ const createLogger = ({
   
         const applyColor = (val: string) => colorize().colorize(level as TLogLevel, val);
   
-        const colorizedTimestamp = applyColor(`[${timestamp}]`);
+        const colorizedTimestamp = applyColor(String(timestamp));
         const colorizedArea = area ? applyColor(`[${area}]`) : null;
         const colorizedLevel = applyColor(level);
   
