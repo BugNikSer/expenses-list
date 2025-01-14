@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getTokens, setTokens } from '@web/src/lib/cookies';
-import tokensService from './services/tokensService';
+import tokensService from './services/tokenService';
 
 type TCtx = {
   req: NextApiRequest;

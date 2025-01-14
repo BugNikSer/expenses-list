@@ -1,4 +1,4 @@
-import { userServiceTrpc } from '@web/src/server/connectors/user-service';
+import { userServiceTrpc } from '@web/src/server/connectors/userServiceConnector';
 import { addMockUser, findMockUser } from "@web/src/server/mock/users";
 import { areaLogger } from "@web/src/lib/logger";
 

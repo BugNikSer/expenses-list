@@ -1,5 +1,5 @@
 import NodeCache from 'node-cache';
-import { userServiceTrpc } from '@web/src/server/connectors/user-service';
+import { userServiceTrpc } from '@web/src/server/connectors/userServiceConnector';
 
 const PARSE_TOKENS_PREFIX = 'parse-tokens';
 
