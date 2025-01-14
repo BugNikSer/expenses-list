@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const SignUpFormSchema = z.object({
-  login: z.string().email({ message: 'Please enter a valid email.' }).trim(),
+  email: z.string().email({ message: 'Please enter a valid email.' }).trim(),
   password: z
     .string()
     .min(8, { message: 'Be at least 8 characters long' })
@@ -14,16 +14,8 @@ export const SignUpFormSchema = z.object({
 });
 
 export const SignInFormSchema = z.object({
-  login: z
-    .string()
-    // .email({ message: 'Please enter valid email' })
-    .trim(),
-  password: z
-    .string()
-    // .min(8, { message: 'Min 8 characters long' })
-    // .regex(/[a-zA-z]/, { message: 'At least one letter' })
-    // .regex(/[0-9]/, { message: 'At least one number' })
-    .trim()
+  email: z.string().trim(),
+  password: z.string().trim(),
 });
 
 export type FormState =

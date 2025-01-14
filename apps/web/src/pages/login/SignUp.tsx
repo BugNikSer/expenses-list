@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 const SignUpPage = () => {
   const router = useRouter();
 
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +16,7 @@ const SignUpPage = () => {
   const handleSingUp = () => {
     setLoading(true);
     signUp
-      .mutateAsync({ login, password })
+      .mutateAsync({ email, password })
       .then(response => {
         console.log(response);
         router.push('/');
@@ -35,7 +35,7 @@ const SignUpPage = () => {
       flexDirection: 'column',
     }}>
       <span>Sign Up</span>
-      <input value={login} onChange={e => setLogin(e.target.value)} />
+      <input value={email} onChange={e => setEmail(e.target.value)} />
       <input value={password} onChange={e => setPassword(e.target.value)} />
       <button onClick={handleSingUp} disabled={loading}>Sign In</button>
     </div>

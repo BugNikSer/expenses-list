@@ -8,7 +8,7 @@ import { trpc } from '@web/src/lib/trpc';
 const SignInPage = () => {
   const router = useRouter();
 
-  const [login, setLogin] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -17,7 +17,7 @@ const SignInPage = () => {
   const handleSignIn = () => {
     setLoading(true);
     signIn
-      .mutateAsync({ login, password })
+      .mutateAsync({ email, password })
       .then(response => {
         console.log(response);
         router.push('/');
@@ -36,7 +36,7 @@ const SignInPage = () => {
       flexDirection: 'column',
     }}>
       <span>Sign In</span>
-      <input value={login} onChange={e => setLogin(e.target.value)} />
+      <input value={email} onChange={e => setEmail(e.target.value)} />
       <input value={password} onChange={e => setPassword(e.target.value)} />
       <button onClick={handleSignIn} disabled={loading}>Sign In</button>
     </div>

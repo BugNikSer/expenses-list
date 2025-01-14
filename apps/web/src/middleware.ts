@@ -1,7 +1,7 @@
 import 'server-only';
 import { NextRequest, NextResponse } from 'next/server';
 import { TOKEN_KEY, REFRESH_TOKEN_KEY } from '@web/src/lib/cookies';
-import tokensService from './server/services/tokenService';
+import tokensService from './server/features/token/tokenService';
 
 const publicPaths = ['/login']
 

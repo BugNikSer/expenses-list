@@ -1,7 +1,7 @@
 import { httpBatchLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import { ssrPrepass } from '@trpc/next/ssrPrepass';
-import type { AppRouter } from '@web/src/server/routers';
+import type { AppRouter } from '@web/src/server/trpc/router';
 import config from './config';
 
 const getBaseUrl = () => {

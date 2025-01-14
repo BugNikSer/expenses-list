@@ -1,10 +1,10 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
-import { router, publicProcedure } from '@web/src/server/trpc';
+import { router, publicProcedure } from '@web/src/server/trpc/trpc';
 import { setTokens, dropTokens } from '@web/src/lib/cookies';
 import { SignUpFormSchema, SignInFormSchema } from '@web/src/lib/definitions';
-import authService from '@web/src/server/services/authService';
+import authService from '@web/src/server/features/auth/service';
 
 export const authRouter = router({
   signUp: publicProcedure
@@ -33,7 +33,7 @@ export const authRouter = router({
         return true;
     }),
   signIn: publicProcedure
-    .input(z.object({ login: z.string(), password: z.string() }))
+    .input(z.object({ email: z.string(), password: z.string() }))
     .mutation(async ({ input, ctx }) => {
       const { data, error } = SignInFormSchema.safeParse(input);
 

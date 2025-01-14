@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
-import { router, procedure } from './trpc';
-import config from '../utils/config';
-import { generateTokens, parseTokens } from '../utils/methods';
+import { router, procedure } from '../../trpc/trpc';
+import config from '../../utils/config';
+import tokenService from './service';
 
 export const tokenRouter = router({
   generate: procedure
@@ -16,7 +16,7 @@ export const tokenRouter = router({
           message: 'Bad configuration',
         });
       }
-      return generateTokens(userId, config.authSecreteKey);
+      return tokenService.generateTokens(userId, config.authSecreteKey);
     }),
 
   parseBoth: procedure
@@ -32,7 +32,7 @@ export const tokenRouter = router({
         });
       }
 
-      const parsed = parseTokens(token, refreshToken, config.authSecreteKey);
+      const parsed = tokenService.parseTokens(token, refreshToken, config.authSecreteKey);
       if (!parsed) {
         throw new TRPCError({
           code: 'UNPROCESSABLE_CONTENT',
@@ -42,7 +42,7 @@ export const tokenRouter = router({
 
       const { payload, expired } = parsed;
       if (expired) {
-        const tokens = generateTokens(payload.userId, config.authSecreteKey);
+        const tokens = tokenService.generateTokens(payload.userId, config.authSecreteKey);
         return { ...payload, tokens };
       } else {
         return { ...payload, tokens: null };
