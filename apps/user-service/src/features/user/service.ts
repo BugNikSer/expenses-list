@@ -6,6 +6,12 @@ const logger = areaLogger('user-service');
 
 const prisma = new PrismaClient();
 
+type TUser = Exclude<Awaited<ReturnType<typeof prisma.user.findFirst>>, null>;
+const cleanUser = (user: TUser) => {
+  const { id, hash, ...rest } = user;
+  return { id: Number(id), ...rest };
+}
+
 const userService = {
   create: async ({
     email,
@@ -22,7 +28,7 @@ const userService = {
       logger.error('create user - db', e);
       throw new Error(`create user, ${e.message}`);
     });
-    return { ...user, id: Number(user.id) };
+    return cleanUser(user);
   },
   find: async ({
     email,
@@ -43,9 +49,23 @@ const userService = {
       logger.error('find user - compare password:', e);
       throw new Error(`find user: ${e.message}`);
     })
-    if (pwdMatches) return { ...user, id: Number(user.id) };
-    return null;
+    if (!pwdMatches) return null;
+    return cleanUser(user);
   },
+  get: async ({
+    userId,
+  } : {
+    userId: number;
+  }) => {
+    const user = await prisma.user.findFirst({
+      where: { id: userId },
+    }).catch(e => {
+      logger.error('get user', e);
+      throw new Error(`get user: ${e.message}`);
+    })
+    if (!user) return null;
+    return cleanUser(user);
+  }
 };
 
 export default userService;

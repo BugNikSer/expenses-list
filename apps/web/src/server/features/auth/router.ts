@@ -6,7 +6,7 @@ import { setTokens, dropTokens } from '@web/src/lib/cookies';
 import { SignUpFormSchema, SignInFormSchema } from '@web/src/lib/definitions';
 import authService from '@web/src/server/features/auth/service';
 
-export const authRouter = router({
+const authRouter = router({
   signUp: publicProcedure
     .input(SignUpFormSchema)
     .mutation(async ({ input, ctx }) => {
@@ -72,4 +72,11 @@ export const authRouter = router({
       const context = await ctx;
       return context.userId;
     }),
-})
+  userId: publicProcedure
+    .query(async ({ ctx }) => {
+      const context = await ctx;
+      return context.userId;
+    }),
+});
+
+export default authRouter;

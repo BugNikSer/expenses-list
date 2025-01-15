@@ -24,7 +24,14 @@ const userService = {
       throw new Error(`find: ${e.message}`);
     });
     return user;
-  }
+  },
+  get: async (data: { userId: number }) => {
+    const user = await userServiceTrpc.user.get.query(data).catch((e: TRPCError) => {
+      logger.error('get', e);
+      throw new Error(`get: ${e.message}`);
+    })
+    return user;
+  },
 };
 
 export default userService;

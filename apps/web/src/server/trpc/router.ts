@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { router, publicProcedure } from './trpc';
-import { authRouter } from "../features/auth/router";
+import authRouter from "../features/auth/router";
+import userRouter from "../features/user/router";
 
 export const appRouter = router({
   hello: publicProcedure
@@ -15,6 +16,7 @@ export const appRouter = router({
       };
     }),
   auth: authRouter,
+  user: userRouter,
 });
 
 export type AppRouter = typeof appRouter;
