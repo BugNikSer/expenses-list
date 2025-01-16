@@ -6,7 +6,13 @@ const theme = createTheme({
     fontFamily: 'var(--font-roboto)',
   },
   // palette: { mode: 'dark' }, TODO: get from localStorage
-  cssVariables: true,
+  cssVariables: {
+    colorSchemeSelector: 'class'
+  },
+  colorSchemes: {
+    dark: true,
+    light: true,
+  },
 });
 
 export default theme;

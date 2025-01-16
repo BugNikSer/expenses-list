@@ -6,3 +6,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - '5432:5432'
+  pg-expenses-service:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - '5433:5433'
+    
