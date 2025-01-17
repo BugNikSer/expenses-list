@@ -32,8 +32,8 @@ const LoginPage = () => {
           onChange={handleTabChange} 
           variant="fullWidth"
         >
-          <Tab label="Sign In" value="in" />
-          <Tab label="Sign Up" value="up" />
+          <Tab label="Вход" value="in" />
+          <Tab label="Регистрация" value="up" />
         </Tabs>
         <div style={{
           padding: 32,

@@ -22,11 +22,11 @@ const userService = {
   }) => {
     const hash = await bcrypt.hash(password, 11).catch(e => {
       logger.error('create user - hash password', e);
-      throw new Error(`create user, ${e.message}`);
+      throw e;
     })
     const user = await prisma.user.create({ data: { email, hash } }).catch(e => {
       logger.error('create user - db', e);
-      throw new Error(`create user, ${e.message}`);
+      throw e;
     });
     return cleanUser(user);
   },
@@ -41,13 +41,13 @@ const userService = {
       where: { email },
     }).catch(e => {
       logger.error('find user - query:', e);
-      throw new Error(`find user: ${e.message}`);
+      throw e;
     })
     if (!user) return null;
 
     const pwdMatches = await bcrypt.compare(password, user?.hash).catch(e => {
       logger.error('find user - compare password:', e);
-      throw new Error(`find user: ${e.message}`);
+      throw e;
     })
     if (!pwdMatches) return null;
     return cleanUser(user);
@@ -61,7 +61,7 @@ const userService = {
       where: { id: userId },
     }).catch(e => {
       logger.error('get user', e);
-      throw new Error(`get user: ${e.message}`);
+      throw e;
     })
     if (!user) return null;
     return cleanUser(user);

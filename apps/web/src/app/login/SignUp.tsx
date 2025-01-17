@@ -50,7 +50,7 @@ const SignUpPage = () => {
       variant="standard"
       value={password}
       onChange={(e) => setPassword(e.target.value)}
-      label="password"
+      label="пароль"
       type={showPassword ? 'text' : 'password'}
       slotProps={{
         input: {
@@ -73,7 +73,7 @@ const SignUpPage = () => {
       loading={loading}
       variant='contained'
     >
-      Sign Up
+      Зарегистрироваться
     </Button>
 
     {error && <Alert severity="error">{error.message}</Alert>}

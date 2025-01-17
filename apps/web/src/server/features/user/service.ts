@@ -11,7 +11,7 @@ const userService = {
   }) => {
     const user = await userServiceTrpc.user.create.mutate(data).catch((e: TRPCError) => {
       logger.error('create', e);
-      throw new Error(`create: ${e.message}`);
+      throw new Error(e.message);
     });
     return user;
   },

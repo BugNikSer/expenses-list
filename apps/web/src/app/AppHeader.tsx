@@ -28,13 +28,14 @@ const AppHeader = () => {
   return (
     <AppBar position='static'>
       <Toolbar sx={{ gap: 1 }}>
-        <Typography component='div' variant='h6' sx={{ flexGrow: 1 }}>
-          My expenses
+        <Typography variant='h6'>
+          Мои траты
         </Typography>
+        <div style={{ flexGrow: 1 }}></div>
 
         {pathname !== '/login' && (
           <QueryHandler query={user} error={<></>} spinnerColor='secondary'>
-            <Typography component='div'>
+            <Typography>
               {user.data?.email}
             </Typography>
             <IconButton color="inherit" size='small' onClick={handleSignOut}>

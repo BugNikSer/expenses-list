@@ -6,8 +6,8 @@ import theme from '../theme';
 import AppHeader from './AppHeader';
 
 export const metadata = {
-  title: 'My expenses',
-  description: 'My expenses list',
+  title: 'Мои траты',
+  description: 'Список моих трат',
 };
 
 const roboto = Roboto({
@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ru" suppressHydrationWarning>
       <body style={{ margin: 0, padding: 0 }} className={roboto.variable}>
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme} defaultMode='system'>
