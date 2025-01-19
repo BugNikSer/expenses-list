@@ -15,6 +15,7 @@
       "@bff/*": ["./apps/bff/*"],
       "@web/*": ["./apps/web/*"],
       "@user-service/*": ["./apps/user-service/*"],
+      "@expenses-service/*": ["./apps/expenses-service/*"],
       "@logger/*": ["./packages/logger/*"],
     }
   }

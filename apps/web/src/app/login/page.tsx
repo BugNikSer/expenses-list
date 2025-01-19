@@ -12,6 +12,7 @@ const LoginPage = () => {
   const handleTabChange = (event: SyntheticEvent, value: string) => {
     setTab(value);
   }
+  
   return (
     <div style={{
       display: 'flex',

@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client/users';
 import bcrypt from 'bcrypt';
 import { areaLogger } from '../../utils/logger';
 
@@ -8,8 +8,8 @@ const prisma = new PrismaClient();
 
 type TUser = Exclude<Awaited<ReturnType<typeof prisma.user.findFirst>>, null>;
 const cleanUser = (user: TUser) => {
-  const { id, hash, ...rest } = user;
-  return { id: Number(id), ...rest };
+  const { hash, ...rest } = user;
+  return rest;
 }
 
 const userService = {
