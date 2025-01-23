@@ -24,17 +24,17 @@ const createLogger = ({
     delete info.metadata;
 
     const meta = Object.values(rest).map(item => {
-      if (typeof item === 'object') return inspect(item, false, null, env === 'LOCAL');
+      if (typeof item === 'object') return inspect(item, false, null, env === 'development');
       return item;
     })
 
-    if (env === 'LOCAL') info.message = [message, ...meta].filter(Boolean);
+    if (env === 'development') info.message = [message, ...meta].filter(Boolean);
     else info.message = [message, ...meta].filter(Boolean).join(' ');
 
     return info;
   });
 
-  const winstonFormat = env === 'LOCAL'
+  const winstonFormat = env === 'development'
     ? combine(
       timestamp({ format: 'DD.MM.YY HH:mm:ss' }),
       metadata(),

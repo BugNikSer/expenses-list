@@ -12,9 +12,8 @@
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "paths": {
-      "@bff/*": ["./apps/bff/*"],
       "@web/*": ["./apps/web/*"],
-      "@user-service/*": ["./apps/user-service/*"],
+      "@users-service/*": ["./apps/users-service/*"],
       "@expenses-service/*": ["./apps/expenses-service/*"],
       "@logger/*": ["./packages/logger/*"],
     }

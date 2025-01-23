@@ -6,8 +6,8 @@
         "install": {
           "dependsOn": ["setup"],
           "cmds": [
-            "pnpm deps:web",
-            "pnpm deps:bff"
+            "pnpm --filter web --filter users-service --filter expenses-service --filter logger install",
+            "pnpm --filter logger build"
           ]
         }
       }

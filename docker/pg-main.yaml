@@ -1,5 +1,5 @@
 services:
-  pg-user-service:
+  pg-users-service:
     image: postgres:latest
     environment:
       - POSTGRES_USER=postgres

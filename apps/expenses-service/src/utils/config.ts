@@ -4,5 +4,5 @@ config();
 
 export default {
   port: Number(process.env.PORT || undefined),
-  env: process.env.ENV,
+  env: process.env.NODE_ENV,
 };
