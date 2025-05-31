@@ -4,6 +4,7 @@ import { Roboto } from 'next/font/google';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../theme';
 import AppHeader from './AppHeader';
+import ClientLocalizationProvider from './_components/ClientLocalizationProvider';
 
 export const metadata = {
   title: 'Мои траты',
@@ -35,15 +36,17 @@ export default function RootLayout({
     <html lang="ru" suppressHydrationWarning>
       <body style={{ margin: 0, padding: 0 }} className={roboto.variable}>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme} defaultMode='system'>
-            <InitColorSchemeScript attribute="class" />
-            <main style={wrapperStyle}>
-              <AppHeader />
-              {children}
-            </main>
-          </ThemeProvider>
+          <ClientLocalizationProvider>
+            <ThemeProvider theme={theme} defaultMode='system'>
+              <InitColorSchemeScript attribute="class" />
+              <main style={wrapperStyle}>
+                <AppHeader />
+                {children}
+              </main>
+            </ThemeProvider>
+          </ClientLocalizationProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
   )
-}
+};

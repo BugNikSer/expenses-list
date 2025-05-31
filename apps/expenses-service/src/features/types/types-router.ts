@@ -9,7 +9,7 @@ const logger = areaLogger('types-router');
 
 const typesRouter = router({
   create: procedure
-    .input(z.object({ name: z.string() }))
+    .input(z.object({ name: z.string(), userId: z.number() }))
     .mutation(async ({ input }) => {
       return await typesService
         .create(input)
@@ -18,6 +18,20 @@ const typesRouter = router({
           throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: e.message });
         });
     }),
+
+    update: procedure
+      .input(z.object({ name: z.string(), id: z.number() }))
+      .mutation(async ({ input }) => {
+        return await typesService
+          .update(input)
+          .catch((e: Error) => {
+            logger.error('update:', e);
+            throw new TRPCError({
+              code: 'INTERNAL_SERVER_ERROR',
+              message: e.message,
+            });
+          });
+      }),
   
     get: procedure
       .input(z.object({ id: z.number() }))

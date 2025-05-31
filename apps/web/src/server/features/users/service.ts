@@ -2,7 +2,7 @@ import { userServiceTrpc } from '@web/src/server/connectors/userServiceConnector
 import { areaLogger } from "@web/src/lib/logger";
 import { TRPCError } from '@trpc/server';
 
-const logger = areaLogger('users-service');
+const logger = areaLogger('users-web-service');
 
 const userService = {
   create: async (data: {

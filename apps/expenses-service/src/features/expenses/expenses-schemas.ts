@@ -2,12 +2,11 @@ import { z } from 'zod';
 
 export const expensePartialSchema = z.object({
   userId: z.number(),
-  product: z.string(),
-  date: z.date(),
+  date: z.number(),
+  cost: z.number(),
+  productId: z.number().optional(),
   categoryId: z.number().optional(),
-  newCategory: z.string().optional(),
   typeId: z.number().optional(),
-  newType: z.string().optional(),
 });
 
 export const expenseSchema = expensePartialSchema.merge(
@@ -22,7 +21,7 @@ export const expensePaginationSchema = z.object({
 export const expenseFilterSchema = z.object({
   userId: z.number(),
   date: z
-    .object({ from: z.date().optional(), to: z.date().optional() })
+    .object({ from: z.number().optional(), to: z.number().optional() })
     .optional(),
   category: z.array(z.number()).optional(),
   type: z.array(z.number()).optional(),

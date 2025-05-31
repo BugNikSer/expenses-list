@@ -120,25 +120,39 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 exports.Prisma.ExpenseScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  product: 'product',
   date: 'date',
+  productId: 'productId',
   categoryId: 'categoryId',
-  typeId: 'typeId'
+  typeId: 'typeId',
+  cost: 'cost'
+};
+
+exports.Prisma.ProductScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  userId: 'userId'
 };
 
 exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  userId: 'userId'
 };
 
 exports.Prisma.TypeScalarFieldEnum = {
   id: 'id',
-  name: 'name'
+  name: 'name',
+  userId: 'userId'
 };
 
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 exports.Prisma.QueryMode = {
@@ -149,6 +163,7 @@ exports.Prisma.QueryMode = {
 
 exports.Prisma.ModelName = {
   Expense: 'Expense',
+  Product: 'Product',
   Category: 'Category',
   Type: 'Type'
 };

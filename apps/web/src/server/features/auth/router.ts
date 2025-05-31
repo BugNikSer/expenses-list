@@ -67,6 +67,7 @@ const authRouter = router({
       dropTokens(context.res);
       return true;
     }),
+  // TODO: clear and remove
   test: publicProcedure
     .query(async ({ ctx }) => {
       const context = await ctx;

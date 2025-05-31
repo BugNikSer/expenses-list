@@ -2,6 +2,11 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  components: {
+    MuiTextField: {
+      defaultProps: { variant: 'standard' },
+    },
+  },
   typography: {
     fontFamily: 'var(--font-roboto)',
   },

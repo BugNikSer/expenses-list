@@ -3,13 +3,13 @@ import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { PrismaClient } from '../../generated-prisma-client';
 import { areaLogger } from '../../utils/logger';
 
-const logger = areaLogger('categories-service');
+const logger = areaLogger('products-service');
 
 const prisma = new PrismaClient();
 
-class CategoriesService {
+class ProductsService {
   async create(data: { name: string, userId: number }) {
-    return await prisma.category
+    return await prisma.product
       .create({ data })
       .catch((e: PrismaClientKnownRequestError) => {
         logger.error('create:', e);
@@ -18,7 +18,7 @@ class CategoriesService {
   }
 
   async update({ name, id }: { name: string, id: number }) {
-    return await prisma.category
+    return await prisma.product
       .update({ where: { id }, data: { name } })
       .catch((e: PrismaClientKnownRequestError) => {
         logger.error('update:', e);
@@ -27,7 +27,7 @@ class CategoriesService {
   }
 
   async get({ id }: { id: number }) {
-    return await prisma.category
+    return await prisma.product
       .findFirst({ where: { id } })
       .catch((e: PrismaClientKnownRequestError) => {
         logger.error('get:', e);
@@ -36,15 +36,15 @@ class CategoriesService {
   }
   
   async all() {
-    return await prisma.category
+    return await prisma.product
       .findMany()
       .catch((e: PrismaClientKnownRequestError) => {
         logger.error('all:', e);
         throw new Error(e.message);
       });
   }
-}
+};
 
-const categoriesService = new CategoriesService();
+const productsService = new ProductsService();
 
-export default categoriesService;
+export default productsService;

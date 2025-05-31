@@ -1,6 +1,6 @@
 import { userServiceTrpc } from '@web/src/server/connectors/userServiceConnector';
 import { areaLogger } from '@web/src/lib/logger';
-import userService from '@web/src/server/features/user/service';
+import userService from '@web/src/server/features/users/service';
 import { TRPCError } from '@trpc/server';
 
 const logger = areaLogger('auth-service');

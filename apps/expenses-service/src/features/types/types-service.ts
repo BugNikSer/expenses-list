@@ -8,14 +8,23 @@ const logger = areaLogger('types-service');
 const prisma = new PrismaClient();
 
 class TypesService {
-  async create({ name }: { name: string }) {
+  async create(data: { name: string, userId: number }) {
     const type = await prisma.type
-      .create({ data: { name } })
+      .create({ data })
       .catch((e: PrismaClientKnownRequestError) => {
         logger.error('create:', e);
         throw new Error(e.message);
       });
     return type;
+  }
+
+  async update({ name, id }: { name: string, id: number }) {
+    return await prisma.type
+      .update({ where: { id }, data: { name } })
+      .catch((e: PrismaClientKnownRequestError) => {
+        logger.error('update:', e);
+        throw new Error(e.message);
+      });
   }
 
   async get({ id }: { id: number }) {

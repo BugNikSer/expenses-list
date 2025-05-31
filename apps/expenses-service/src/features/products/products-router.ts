@@ -2,16 +2,16 @@ import { z } from 'zod';
 import { TRPCError } from '@trpc/server';
 
 import { router, procedure } from "../../trpc/init";
-import categoriesService from "./categories-service";
+import productsService from "./products-service";
 import { areaLogger } from '../../utils/logger';
 
-const logger = areaLogger('categories-router');
+const logger = areaLogger('products-router');
 
-const categoriesRouter = router({
+const productsRouter = router({
   create: procedure
     .input(z.object({ name: z.string(), userId: z.number() }))
     .mutation(async ({ input }) => {
-      return await categoriesService
+      return await productsService
         .create(input)
         .catch((e: Error) => {
           logger.error('create:', e);
@@ -25,7 +25,7 @@ const categoriesRouter = router({
   update: procedure
     .input(z.object({ name: z.string(), id: z.number() }))
     .mutation(async ({ input }) => {
-      return await categoriesService
+      return await productsService
         .update(input)
         .catch((e: Error) => {
           logger.error('update:', e);
@@ -39,7 +39,7 @@ const categoriesRouter = router({
   get: procedure
     .input(z.object({ id: z.number() }))
     .query(async ({ input }) => {
-      const category = await categoriesService
+      const product = await productsService
         .get(input)
         .catch((e: Error) => {
           logger.error('get:', e);
@@ -48,16 +48,16 @@ const categoriesRouter = router({
             message: e.message,
           });
         });
-      if (!category) throw new TRPCError({
+      if (!product) throw new TRPCError({
         code: 'NOT_FOUND',
-        message: 'Category not found',
+        message: 'Product not found',
       });
-      return category;
+      return product;
     }),
 
   all: procedure
     .query(async () => {
-      return await categoriesService
+      return await productsService
         .all()
         .catch((e: Error) => {
           logger.error('all:', e);
@@ -69,4 +69,4 @@ const categoriesRouter = router({
     })
 });
 
-export default categoriesRouter;
+export default productsRouter;
