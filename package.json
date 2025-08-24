@@ -7,9 +7,15 @@
     "deps:bff": "pnpm --filter bff install",
     "build:bff": "pnpm --filter bff build",
     "start:bff": "pnpm --filter bff start",
+    "deps:expenses": "pnpm --filter expenses-service install",
+    "build:expenses": "pnpm --filter expenses-service build",
+    "start:expenses": "pnpm --filter expenses-service start",
     "deps:web": "pnpm --filter web install",
     "build:web": "pnpm --filter web build",
-    "start:web": "pnpm --filter web start"
+    "start:web": "pnpm --filter web start",
+    "deps:elf": "pnpm --filter elf install",
+    "build:elf": "pnpm --filter elf build",
+    "start:elf": "pnpm --filter elf start"
   },
   "keywords": [],
   "author": "",

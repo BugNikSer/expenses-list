@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 11, "column": 0}, "map": {"version":3,"sources":["file:///home/nick/projects/expenses-list/apps/elf/src/app/page.tsx"],"sourcesContent":["import Image from \"next/image\";\nimport styles from \"./page.module.css\";\n\nexport default function Home() {\n  return (\n    <div>Hi</div>\n  );\n}\n"],"names":[],"mappings":";;;;;;AAGe,SAAS;IACtB,qBACE,6PAAC;kBAAI;;;;;;AAET","debugId":null}}]
+}
